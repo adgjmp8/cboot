@@ -1,0 +1,13 @@
+.PHONY: all
+all:
+	@docker-compose run --rm l4t_make_module
+	@sed -e 's|/workspace|$(PWD)/../..|g' temp.json > compile_commands.json
+	@rm -f temp.json
+
+
+.PHONY: clean
+clean:
+	@docker-compose run --rm l4t_make_clean
+	@rm -f compile_commands.json
+
+

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  l4t_make_module:
+    build: .
+    volumes:
+      - ../../:/workspace
+    working_dir: /workspace/work/cboot
+    environment:
+      - KDIR=/workspace/kernel/kernel-4.9/tegra_kernel_out
+    command: >
+      bash -c "bear -a -o temp.json make -C ./bootloader/partner/t18x/cboot/ TEGRA_TOP=/workspace/work/cboot TOP=/workspace/work/cboot PROJECT=t186 TOOLCHAIN_PREFIX=/opt/linaro/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- DEBUG=2 BUILDROOT=/workspace/work/cboot/out NV_BUILD_SYSTEM_TYPE=l4t NOECHO=@"
+
+  l4t_make_clean:
+    build: .
+    volumes:
+      - ../../:/workspace
+    working_dir: /workspace/work/cboot
+    environment:
+      - KDIR=/workspace/kernel/kernel-4.9/tegra_kernel_out
+    command: >
+      bash -c "bear -a -o temp.json make -C ./bootloader/partner/t18x/cboot/ TEGRA_TOP=/workspace/work/cboot TOP=/workspace/work/cboot PROJECT=t186 TOOLCHAIN_PREFIX=/opt/linaro/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- DEBUG=2 BUILDROOT=/workspace/work/cboot/out NV_BUILD_SYSTEM_TYPE=l4t clean &&
+      rm -f temp.json"
